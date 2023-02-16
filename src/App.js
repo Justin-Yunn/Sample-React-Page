@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import './App.css'
 
-function App() {
+
+const App = () => {
+  const [text, setText] = useState([
+    { input: 'Hello World', id: 1}
+  ]) 
+  const [newInput, setNewInput] = useState('')
+
+  const handleInputChange = (event) =>{
+    setNewInput(event.target.value)
+  }
+
+  const addText = (event) => {
+    event.preventDefault()
+    const textObj = {
+      input: newInput,
+      id: text.length + 1,
+    }
+
+    var arr = text.map(i => i.input.toLowerCase())
+
+    if(arr.includes(newInput.toLowerCase()) === false){
+      setText(text.concat(textObj))
+      setNewInput('')
+    }
+
+    else{
+      alert(newInput + " already exists")
+      setNewInput('')
+      return
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Sample Page</h1>
+      <h2>Add New:</h2>
+      <form onSubmit={addText}>
+        <div>
+          Input: <input value={newInput} onChange={handleInputChange}></input> <button type='submit'>Add</button>
+        </div>
+      </form>
+      <h2>Output: </h2>
+      <div>
+        {text.map(i => 
+          <p key={i.id}>
+            {i.id + ': ' + i.input}
+          </p>)}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
