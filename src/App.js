@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import './App.css'
 
-
 const App = () => {
   const [text, setText] = useState([
     { input: 'Hello World', id: 1}
